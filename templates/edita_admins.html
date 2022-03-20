@@ -1,0 +1,15 @@
+{%extends 'template.html'%}
+
+{%block body%}
+  <div>
+    {%for a,v in admin.items()%}
+      {%if a in ["senha", "id"]%}
+
+      {%else%}
+      <label >{{a}}</label>
+      <input type="text" value="{{v}}">
+      {%endif%}
+    {%endfor%}
+    <a href="/altera_senha?q={{admin.id}}">Alterar senha</a>
+  </div>
+{%endblock%}
