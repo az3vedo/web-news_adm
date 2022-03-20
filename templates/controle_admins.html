@@ -1,0 +1,18 @@
+{%extends 'template.html'%}
+
+{%block head%}
+
+{%endblock%}
+
+{%block body%}
+<div class="bloco-admins">
+  {%for i,a in admins%}
+    <div>
+      <label>{{a.nome}}</label>
+      <label>{{a.email}}</label>
+      <a href="/edita_admins?q={{i}}">Editar</a>
+    </div>
+  {%endfor%}
+</div>
+{%endblock%}
+
