@@ -1,4 +1,4 @@
-{%extends 'template.html'}
+{%extends 'template.html'%}
 {%block head%}
 
 {%endblock%}
@@ -7,7 +7,16 @@
 <div>
   <table>
     <thead>
-      
+      <div class="bloco-noticias">
+        {% for i,n in noticias %}
+          <h3>{{n.titulo}}</h3>
+          <h4>{{n.autor}}</h4>
+          <h5>{{n.categoria}}</h5>
+          <p>{{n.materia}}</p>
+          <a href="/edita_noticias?q={{i}}">Editar</a>
+          <button> excluir</button>
+        {% endfor %}
+      </div>
     </thead>
   </table>
 </div>
