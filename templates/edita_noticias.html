@@ -1,0 +1,12 @@
+{% extends 'template.html'%}
+  {%block body%}
+    {%for a,v in noticia.items()%}
+    <label>{{a}}</label>
+    {%if a == 'materia'%}
+      <textarea rows=16 cols=50>{{v}}</textarea>
+    {%else%}
+      <input type="text" id="autor" name="autor" value="{{v}}"><br><br>
+    {%endif%}
+    {%endfor%}
+    <button>Salvar</button>
+  {%endblock%}
