@@ -1,6 +1,11 @@
 # web-news_adm
 Administrador do portal de notícias
 
+### Integrantes
+ - Gabriel Azevedo de Souza
+ - Maria Eduarda Basílio de Oliveira
+ - Igor Sene Idalgo
+
 ### Instruções para executar o projeto
 
 #### Primeiros passos
