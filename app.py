@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect
 from jinja2 import PackageLoader, Environment, select_autoescape
+
+import database.db
+
 app = Flask(__name__)
 noticias = [
             {
