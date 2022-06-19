@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, redirect
 from jinja2 import PackageLoader, Environment, select_autoescape
+# import services.login
 
 import database.db
+# from services.login import LoginService
+
+# login_service = LoginService()
 
 app = Flask(__name__)
 noticias = [
