@@ -5,7 +5,7 @@ from database.engine import db_engine
 Base = declarative_base()
 
 class Login(Base):
-  tablename = "login"
+  __tablename__ = "login"
   id = Column(Integer, primary_key=True)
   userName = Column(String(80), nullable=False)
   senha = Column(String(80), nullable=False)
