@@ -1,12 +1,41 @@
-{% extends 'template.html'%}
-  {%block body%}
-    {%for a,v in noticia.items()%}
-    <label>{{a}}</label>
-    {%if a == 'materia'%}
-      <textarea rows=16 cols=50>{{v}}</textarea>
-    {%else%}
-      <input type="text" id="autor" name="autor" value="{{v}}"><br><br>
-    {%endif%}
-    {%endfor%}
-    <button>Salvar</button>
-  {%endblock%}
+{%extends 'template.html'%}
+{%block body%}
+  <div class="Edita Noticia"></div>
+  <div>
+    <h1>Edita Noticia</h1>
+    <p> 
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" name="titulo"><br><br>
+    </p>
+    <p> 
+      <label for="autor">Autor:</label>
+      <input type="text" id="autor" name="autor"><br><br>
+    </p>
+    <p> 
+      <label for="assunto">Assunto:</label>
+      <input type="text" id="assunto" name="assunto"><br><br>
+    </p>
+    <p> 
+      <label for="conteudo">Matéria:</label>
+      <textarea id="conteudo" name="conteudo"></textarea><br><br>
+    </p>
+    <button>Editar</button>
+  </div>
+    <script type="text/javascript">
+      function editNoticia(){
+        let titulo = $("#titulo").val();
+        let autor = $("#autor").val();
+        let assunto = $("#assunto").val();
+        let conteudo = $("#conteudo").val();
+        let json_request = JSON.stringify({"titulo": titulo, "conteudo": conteudo, "autor": autor, "assunto": assunto})
+        console.log(json_request)
+        fetch('http://127.0.0.1:5100/noticias/edit/', {method: 'PUT', body: json_request, headers: {"Content-Type": "application/json"}}).then((response)=>{
+          console.log(response)
+        }).catch((e)=>
+        {console.log(e)
+        })
+      }
+      $("button").on("click", ()=>editNoticia())
+    </script>
+</div>
+{%endblock%}

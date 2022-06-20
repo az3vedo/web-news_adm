@@ -1,51 +1,8 @@
 from flask import Flask, render_template, request, redirect
 from jinja2 import PackageLoader, Environment, select_autoescape
+from services.api import Api
+
 app = Flask(__name__)
-noticias = [
-            {
-              "titulo": "Time da cidade passa para as semi-finais!",
-              "autor": "Pedro Cabral",
-              "categoria": "Esporte",
-              "materia": "Pedro Paulo Ricardo Gabriel Maria Fabricio Fernando José Raul William Douglas Charles Beatriz Vitória Bianca"
-            },
-            {
-              "titulo": "Vai chover canivetes!",
-              "autor": "João das Neves",
-              "categoria": "Clima e previsão do tempo",
-              "materia": "Pedro Paulo Ricardo Gabriel Maria Fabricio Fernando José Raul William Douglas Charles Beatriz Vitória Bianca"
-            },
-            {
-              "titulo": "Novo esporte domina as escolas da cidade",
-              "autor": "João das Neves",
-              "categoria": "Esporte",
-              "materia": "Pedro Paulo Ricardo Gabriel Maria Fabricio Fernando José Raul William Douglas Charles Beatriz Vitória Bianca"
-            }
-          ]
-
-admins = [
-  {
-    "id" : 0,
-    "nome": "Gabriel A. Souza",
-    "email": "gabriel@webnews.com.br",
-    "senha": "04b6e1a104ba0ed5e7985abde3e13140",
-  },
-  {
-    "id" : 1,
-    "nome": "Igor Sene",
-    "email": "igor@webnews.com.br",
-    "senha": "a30c6179cc93d1f26982c1d26361cb2c",
-  },
-  {
-    "id" : 2,
-    "nome": "Maria Eduarda Basilio",
-    "email": "duda@webnews.com.br",
-    "senha": "911396e59a692150b0217c16c3f9f046",
-  }
-]
-
-def select_admin(position):
-  result = list(filter(lambda x: x["id"] == position, admins))
-  return result[0]
 
 env = Environment(
   loader=PackageLoader("app"),
@@ -59,6 +16,7 @@ def home():
 
 @app.route('/controle_noticias')
 def news_control():
+  noticias = Api.getNoticias()
   template = env.get_template('controle_noticias.html')
   return render_template(template, noticias=enumerate(noticias), page={'title':"News Control"})
 
@@ -72,6 +30,16 @@ def news_edit():
 def news_add():
   template = env.get_template('adiciona_noticias.html')
   return render_template(template, page={'title':"News Add"})
+
+@app.route('/adiciona_assunto')
+def assunto_add():
+  template = env.get_template('adiciona_assunto.html')
+  return render_template(template, page={'title':"Add Assunto"})
+
+@app.route('/adiciona_autor')
+def autor_add():
+  template = env.get_template('adiciona_autor.html')
+  return render_template(template, page={'title':"Add Autor"})
 
 @app.route('/controle_admins')
 def admins_control():

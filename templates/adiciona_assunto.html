@@ -1,0 +1,26 @@
+{%extends 'template.html'%}
+{%block body%}
+  <div class="Adicionar Assunto"></div>
+  <div>
+    <h1>Adicionar Assunto</h1>
+    <p> 
+      <label for="assunto">Assunto:</label>
+      <input type="text" id="assunto" name="assunto"><br><br>
+    </p>
+    <button>Adicionar</button>
+  </div>
+    <script type="text/javascript">
+      function addAssunto(){
+        let assunto = $("#assunto").val();
+        let json_request = JSON.stringify({"nome": assunto})
+        console.log(json_request)
+        fetch('http://127.0.0.1:5100/assunto/add/', {method: 'POST', body: json_request, headers: {"Content-Type": "application/json"}}).then((response)=>{
+          console.log(response)
+        }).catch((e)=>
+        {console.log(e)
+        })
+      }
+      $("button").on("click", ()=>addAssunto())
+    </script>
+</div>
+{%endblock%}
