@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from flask_login import login_required
 
 noticias = [
             {
@@ -46,17 +47,25 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-  return 'Index'
+  return render_template('login.html', page={'title': "Web News Admin"})
+
+# @main.route('/home')
+# @login_required
+# def home():
+#   return render_template('home.html', page={'title': "Web News Admin"})
 
 @main.route('/controle_noticias')
+@login_required
 def news_control():
   return render_template('controle_noticias.html', noticias=enumerate(noticias), page={'title':"News Control"})
 
 @main.route('/edita_noticias')
+@login_required
 def news_edit():
   posicao = int(request.args['q'])
   return render_template('edita_noticias.html', noticia=noticias[posicao], page={'title':"News Edit"})
 
 @main.route('/adiciona_noticias')
+@login_required
 def news_add():
   return render_template('adiciona_noticias.html', page={'title':"News Add"})
