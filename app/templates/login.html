@@ -1,0 +1,32 @@
+{%extends 'template.html'%}
+{%block head%}
+<link rel="stylesheet" href="../static/css/login.css">
+{% endblock %}
+
+{%block body%}
+<div>
+  <input id="username" type="text">
+  <input id="password" type="password">
+  <button>Login</button>
+</div>
+<script>
+  async function doLogin(){
+    let username = $('#username').val();
+    let password = $('#password').val();
+
+    let json_request = JSON.stringify({"userName":username, "senha":password});
+    console.log(username, password)
+    await fetch('/login', {method: 'POST', body: json_request, headers: {"Content-Type": "application/json"}}).then(
+      (response) => {
+        console.log(response.url);
+        window.location.href = response.url;
+      }
+    ).catch((e)=>{
+      console.log('Erro: ', e);
+    })
+  } 
+  $('button').on('click', doLogin);
+  $('#username').val();
+  $('#password').val();
+</script>
+{% endblock %}
