@@ -1,25 +1,42 @@
-  {%extends 'template.html'%}
-  {%block body%}
-    <div class="Adicionar Noticia"></div>
-    <form>
-      <h1>Adicionar Noticia</h1>
-      <p> 
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo"><br><br>
-      </p>
-      <p> 
-        <label for="autor">Autor:</label>
-        <input type="text" id="autor" name="autor"><br><br>
-      </p>
-      <p> 
-        <label for="categoria">Categoria:</label>
-        <input type="text" id="categoria" name="categoria"><br><br>
-      </p>
-      <p> 
-        <label for="materia">Matéria:</label>
-        <textarea id="materia" name="materia"></textarea><br><br>
-      </p>
-      <button>Adicionar</button>
-      </form>
+{%extends 'template.html'%}
+{%block body%}
+  <div class="Adicionar Noticia"></div>
+  <div>
+    <h1>Adicionar Noticia</h1>
+    <p> 
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" name="titulo"><br><br>
+    </p>
+    <p> 
+      <label for="autor">Autor:</label>
+      <input type="text" id="autor" name="autor"><br><br>
+    </p>
+    <p> 
+      <label for="assunto">Assunto:</label>
+      <input type="text" id="assunto" name="assunto"><br><br>
+    </p>
+    <p> 
+      <label for="conteudo">Matéria:</label>
+      <textarea id="conteudo" name="conteudo"></textarea><br><br>
+    </p>
+    <button>Adicionar</button>
   </div>
-  {%endblock%}
+    <script type="text/javascript">
+      function addNoticia(){
+        let titulo = $("#titulo").val();
+        let autor = $("#autor").val();
+        let assunto = $("#assunto").val();
+        let conteudo = $("#conteudo").val();
+        let json_request = JSON.stringify({"titulo": titulo, "conteudo": conteudo, "autor": autor, "assunto": assunto})
+        console.log(json_request)
+        fetch('http://127.0.0.1:5100/noticias/add/', {method: 'POST', body: json_request, headers: {"Content-Type": "application/json"}}).then((response)=>{
+          console.log(response)
+          window.location.reload()
+        }).catch((e)=>
+        {console.log(e)
+        })
+      }
+      $("button").on("click", ()=>addNoticia())
+    </script>
+</div>
+{%endblock%}

@@ -8,16 +8,28 @@
   <table>
     <thead>
       <div class="bloco-noticias">
-        {% for i,n in noticias %}
+        {% for n in noticias %}
           <h3>{{n.titulo}}</h3>
           <h4>{{n.autor}}</h4>
-          <h5>{{n.categoria}}</h5>
-          <p>{{n.materia}}</p>
-          <a href="/edita_noticias?q={{i}}">Editar</a>
-          <button> excluir</button>
+          <h5>{{n.assunto}}</h5>
+          <p>{{n.conteudo}}</p>
+          <a href="/edita_noticias/{{n.id}}">Editar</a>
+          <button onclick="deleteNoticia({{n.id}})"> excluir</button>
         {% endfor %}
       </div>
     </thead>
   </table>
+  <script type="text/javascript">
+    function deleteNoticia(id){
+      let json_request = JSON.stringify({"id": id})
+      console.log(json_request)
+      fetch('http://127.0.0.1:5100/noticias/delete/', {method: 'DELETE', body: json_request, headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}}).then((response)=>{
+        console.log(response)
+        window.location.reload()
+      }).catch((e)=>
+      {console.log(e)
+      })
+    }
+  </script>
 </div>
 {%endblock%}

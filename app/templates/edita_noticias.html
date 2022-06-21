@@ -2,11 +2,31 @@
   {%block body%}
     {%for a,v in noticia.items()%}
     <label>{{a}}</label>
-    {%if a == 'materia'%}
-      <textarea rows=16 cols=50>{{v}}</textarea>
+    {%if a == 'conteudo'%}
+      <textarea id={{a}} rows=16 cols=50>{{v}}</textarea><br><br>
+    {%elif a == 'id'%}
+      <input disabled id={{a}} value={{v}}><br>
     {%else%}
-      <input type="text" id="autor" name="autor" value="{{v}}"><br><br>
+      <input id={{a}} type="text" value="{{v}}"><br><br>
     {%endif%}
     {%endfor%}
     <button>Salvar</button>
+    <script>
+      async function editNoticia(){
+        let titulo = $("#titulo").val();
+        let conteudo = $("#conteudo").val();
+        let id = $("#id").val();
+        json_request = JSON.stringify({id, titulo, conteudo});
+        console.log(json_request);
+        await fetch('http://127.0.0.1:5100/noticias/edit/', {method: 'PUT', body: json_request, headers: {"Content-Type": "application/json"}}).then((response)=>{
+          console.log(response)
+          window.location.href = '../../controle_noticias'  
+        }).catch((e)=>{
+          console.log(e)
+        })
+      }
+
+      $("button").on('click', editNoticia)
+    </script>
+
   {%endblock%}

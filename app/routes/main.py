@@ -1,47 +1,7 @@
 from flask import Blueprint, render_template, request
 from flask_login import login_required
-
-noticias = [
-            {
-              "titulo": "Time da cidade passa para as semi-finais!",
-              "autor": "Pedro Cabral",
-              "categoria": "Esporte",
-              "materia": "Pedro Paulo Ricardo Gabriel Maria Fabricio Fernando José Raul William Douglas Charles Beatriz Vitória Bianca"
-            },
-            {
-              "titulo": "Vai chover canivetes!",
-              "autor": "João das Neves",
-              "categoria": "Clima e previsão do tempo",
-              "materia": "Pedro Paulo Ricardo Gabriel Maria Fabricio Fernando José Raul William Douglas Charles Beatriz Vitória Bianca"
-            },
-            {
-              "titulo": "Novo esporte domina as escolas da cidade",
-              "autor": "João das Neves",
-              "categoria": "Esporte",
-              "materia": "Pedro Paulo Ricardo Gabriel Maria Fabricio Fernando José Raul William Douglas Charles Beatriz Vitória Bianca"
-            }
-          ]
-
-admins = [
-  {
-    "id" : 0,
-    "nome": "Gabriel A. Souza",
-    "email": "gabriel@webnews.com.br",
-    "senha": "04b6e1a104ba0ed5e7985abde3e13140",
-  },
-  {
-    "id" : 1,
-    "nome": "Igor Sene",
-    "email": "igor@webnews.com.br",
-    "senha": "a30c6179cc93d1f26982c1d26361cb2c",
-  },
-  {
-    "id" : 2,
-    "nome": "Maria Eduarda Basilio",
-    "email": "duda@webnews.com.br",
-    "senha": "911396e59a692150b0217c16c3f9f046",
-  }
-]
+from jinja2 import PackageLoader, Environment, select_autoescape
+from app.services.api import Api
 
 main = Blueprint('main', __name__)
 
@@ -57,15 +17,24 @@ def index():
 @main.route('/controle_noticias')
 @login_required
 def news_control():
-  return render_template('controle_noticias.html', noticias=enumerate(noticias), page={'title':"News Control"})
+  return render_template('controle_noticias.html', page={'title':"News Control"}, noticias=Api.getNoticias())
 
-@main.route('/edita_noticias')
+@main.route('/edita_noticias/<id>')
 @login_required
-def news_edit():
-  posicao = int(request.args['q'])
-  return render_template('edita_noticias.html', noticia=noticias[posicao], page={'title':"News Edit"})
+def news_edit(id):
+  return render_template('edita_noticias.html', page={'title':"News Edit"}, noticia=Api.getNoticiaById(id))
 
 @main.route('/adiciona_noticias')
 @login_required
 def news_add():
   return render_template('adiciona_noticias.html', page={'title':"News Add"})
+
+@main.route('/adiciona_assunto')
+@login_required
+def assunto_add():
+  return render_template('adiciona_assuntos.html', page={'title':"Add Assunto"})
+
+@main.route('/adiciona_autor')
+@login_required
+def autor_add():
+  return render_template('adiciona_autores.html', page={'title':"Add Autor"})
